@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <string.h>
 #include "graph.h"
+#include "table.h"
 
 void getCollection(graph g);
 
