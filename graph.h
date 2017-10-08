@@ -7,5 +7,14 @@
 #include <string.h>
 
 
+typedef struct graph_t {
+    int nV;
+    int nE;
+    int **edges;
+    char **str_l;
+} *graph;
+
+graph initGraph(int nV);
+
 
 #endif

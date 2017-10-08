@@ -5,16 +5,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#include "graph.h"
 
-typedef struct graph_t {
-    int nV;
-    int nE;
-    int **edges;
-    char **str_l;
-} *graph;
-
-
-
-
+void getCollection(graph g);
 
 #endif

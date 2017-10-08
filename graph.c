@@ -19,7 +19,7 @@ graph initGraph(int nV){
         memset(new->edges[i], 0, nV*sizeof(int));
     }
     // intilise an empty pointer array
-    g->str_l = malloc(nV* sizeof(char *));
-    assert(g->str_l != NULL);
-    return g;
+    new->str_l = malloc(nV* sizeof(char *));
+    assert(new->str_l != NULL);
+    return new;
 }
