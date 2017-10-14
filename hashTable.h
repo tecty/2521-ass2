@@ -5,14 +5,14 @@
 #include <assert.h>
 #include <string.h>
 #include <ctype.h>
+#include "linklist_lib.h"
 
 union val_u{
     // multi type of union
     double d;
     int i;
-    // this two kind of val type
-    // queue q;
-    // stack s;
+    // in the linklist lib, the type
+    link l;
 
 };
 

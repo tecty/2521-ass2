@@ -15,7 +15,7 @@ all: pagerank
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-pagerank: pagerank.c graph.o hashTable.o pr_lib.o readData.o
+pagerank: pagerank.c graph.o hashTable.o pr_lib.o readData.o index_lib.o linklist_lib.o
 	$(CC) -o $@ $^ $(CFLAGS)
 # invertedIndex:
 # 	$(CC) -o $@ $^ $(CFLAGS)
