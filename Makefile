@@ -1,5 +1,5 @@
 CC = clang
-FLAGS = -Wall -Werror -g -DDEBUG -Wextra
+CFLAGS = -Wall -Werror -g -DDEBUG -Wextra
 # just need to put all the depended .h files,
 # it would look for the file.c with same name
 DEPS = graph.h hashTable.h index_lib.h linklist_lib.h pr_lib.h readData.h
@@ -15,10 +15,16 @@ all: pagerank
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 pagerank: pagerank.c graph.o hashTable.o pr_lib.o readData.o
-	gcc -o $@ $^ $(CFLAGS)
+	$(CC) -o $@ $^ $(CFLAGS)
 # invertedIndex:
-# 	gcc -o $@ $^ $(CFLAGS)
+# 	$(CC) -o $@ $^ $(CFLAGS)
+
+testReadData: testReadData.c graph.o hashTable.o pr_lib.o readData.o
+	$(CC) -o $@ $^ $(CFLAGS)
+testHashTable: test_hasht.c hashTable.o
+	$(CC) -o $@ $^ $(CFLAGS)
 
 
 clean:
 	rm *.o *.gch pagerank invertedIndex -f
+	rm testReadData testHashTable

@@ -70,7 +70,7 @@ void showGraph(graph g) {
         printf("%s : ", g->str_l[src]);
         // print its link table
 
-        for (size_t dest = 0; dest < g->nV; dest++) {
+        for (int dest = 0; dest < g->nV; dest++) {
             /* print every edges */
             printf("%d ", g->edges[src][dest]);
         }

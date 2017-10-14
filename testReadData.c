@@ -1,6 +1,6 @@
 #include "readData.h"
 #include "graph.h"
-#include "pagerank.h"
+#include "pr_lib.h"
 
 int main() {
     /* test readData's function */
