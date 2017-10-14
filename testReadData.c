@@ -1,5 +1,6 @@
 #include "readData.h"
 #include "graph.h"
+#include "pagerank.h"
 
 int main() {
     /* test readData's function */
@@ -11,9 +12,19 @@ int main() {
     // show what's has read
     showGraph(g);
 
-    
+    // calculate the pagerank
+    PageRankW(g,0.85,0.00001,1000);
+
+    printf("\nPageranks\n" );
+    // show the pagerank
+    show_pagerank();
+    // show the weight_in and weight_out
+    show_weight();
 
 
+    // sort them and show the result
+    sort_by_pr();
+    show_pagerank();
 
     return 0;
 }

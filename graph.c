@@ -77,7 +77,10 @@ void showGraph(graph g) {
         // print a new line
         printf("\n");
     }
-
+    printf("\nThe information for helper table\n");
+    for (int src = 0; src < g->nV; src++) {
+        printf("%s: Wc:%d\tInlink:%d\tOutlin:%d\n",g->str_l[src],g->wc[src],g->inlink[src],g->outlink[src] );
+    }
 
     printf("\nThe information in hash table\n" );
 
@@ -98,5 +101,42 @@ void showGraph(graph g) {
         // print the new line
         printf("\n");
     }
+}
+
+void swap_vertex (graph g, int src, int dest){
+    // a porary pointer
+    void *tmp;
+
+    // swap the edges
+    tmp = g->edges[src];
+    g->edges[src] = g->edges[dest];
+    g->edges[dest] = tmp;
+
+    // swap the str_l
+    tmp = g->str_l[src];
+    g->str_l[src] = g->str_l[dest];
+    g->str_l[dest] = tmp;
+
+    // swap the hashTable
+    tmp = g->content[src];
+    g->content[src] = g->content[dest];
+    g->content[dest] = tmp;
+
+
+    // integer tmp value
+    int int_tmp;
+    int_tmp = g->inlink[src];
+    g->inlink[src] = g->inlink[dest];
+    g->inlink[dest] = int_tmp;
+
+    // swap outlink
+    int_tmp = g->outlink[src];
+    g->outlink[src] = g->outlink[dest];
+    g->outlink[dest] = int_tmp;
+
+    // swap word count
+    int_tmp = g->wc[src];
+    g->wc[src] = g->wc[dest];
+    g->wc[dest] = int_tmp;
 
 }

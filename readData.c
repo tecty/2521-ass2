@@ -68,10 +68,10 @@ void getSect2(graph g, FILE *fp, int src) {
             this_node = insert_node(t, buff);
             // set the word count to 0
             this_node->val.i = 0;
-            // increament the wordcount
-            g->wc[src] ++;
-        }
 
+        }
+        // increament the wordcount
+        g->wc[src] ++;
         // count one more for this node
         this_node->val.i ++;
 
@@ -140,7 +140,7 @@ void readCollection(graph g) {
     // initialised the array to store the string pointer
     g->str_l = malloc(max * sizeof(char * ));
 
-    while (!feof(fp) && fscanf(fp,"%s", buff)) {
+    while (!feof(fp) && fscanf(fp,"%s", buff) == 1) {
         /* scan all the url name */
         if (g->nV >= max) {
             /* the pointer array is not enought, resize the array */

@@ -7,10 +7,10 @@
 
 
 
-void PageRankW(graph g, double d, double diffPR,int maxIteration)
+void PageRankW(graph g, double d, double diffPR,int maxIteration);
 
-
-
-
+void show_pagerank();
+void show_weight();
+void sort_by_pr();
 
 #endif

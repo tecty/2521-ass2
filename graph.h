@@ -7,7 +7,7 @@
 #include <string.h>
 #include "hashTable.h"
 
-#define PAGE_PATH "ex1/"
+#define PAGE_PATH "ex2/"
 
 typedef struct graph_t {
     int nV;
@@ -29,5 +29,8 @@ int getIdByKey(graph g, char *key);
 // show all the information in the graph
 // the value in the hash table must be int
 void showGraph(graph g);
+
+// swap the vertex and its content
+void swap_vertex (graph g, int src, int dest);
 
 #endif
