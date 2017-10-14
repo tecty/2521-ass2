@@ -16,10 +16,18 @@ typedef struct graph_t {
     int *inlink;
     int *outlink;
     char **str_l;
+    // counter for word of each page
+    int *wc;
     hash_table *content;
 } *graph;
 
 graph initGraph(int nV);
-
+// insert  the edge in the graph
+void insert_edge(graph g, int src, int dest);
+// search the id for the link
+int getIdByKey(graph g, char *key);
+// show all the information in the graph
+// the value in the hash table must be int
+void showGraph(graph g);
 
 #endif

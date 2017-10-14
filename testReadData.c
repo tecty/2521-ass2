@@ -7,11 +7,11 @@ int main() {
 
     // test1: getCollection
     getCollection(g);
-    // print the output in getCollection
-    for (int i = 0; i < g->nV; i++) {
-        printf("%s\n", g->str_l[i]);
-    }
 
+    // show what's has read
+    showGraph(g);
+
+    
 
 
 

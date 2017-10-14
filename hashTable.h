@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#include <ctype.h>
 
 union val_u{
     // multi type of union
@@ -32,4 +33,10 @@ typedef struct hash_table_t {
 hash_table init_table();
 hash_node find_node(hash_table t, char * key);
 hash_node insert_node(hash_table t , char* key);
+
+// generalise_table to a table has length = nItem
+void generalise_table(hash_table t);
+
+// show all the key in table
+void show_table(hash_table t);
 #endif

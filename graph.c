@@ -15,6 +15,7 @@ int getIdByKey(graph g, char *key){
 void insert_edge(graph g, int src, int dest) {
     /* insert_edge by id */
     if (src!=dest) {
+        // prevent the self link
         g->edges[src][dest] =1;
         g->inlink[dest]++;
         g->outlink[src]++;
@@ -44,19 +45,58 @@ graph initGraph(int nV){
     new->str_l = malloc(nV* sizeof(char *));
     assert(new->str_l != NULL);
     // intilise all the hash_tables
-    new->content = malloc(g->nV * sizeof(hash_table));
+    new->content = malloc(new->nV * sizeof(hash_table));
     for (int i = 0; i < nV; i++) {
         /* initialise tables */
         new ->content[i] = init_table();
     }
 
-    //initialised all the inlink and outlink table
-    g->inlink= malloc(nV * sizeof(int));
-    g->outlink= malloc(nV * sizeof(int));
+    //initialised all the inlink, outlink, wordcount table
+    new->inlink= malloc(nV * sizeof(int));
+    new->outlink= malloc(nV * sizeof(int));
+    new->wc= malloc(nV * sizeof(int));
     for (int i = 0; i < nV; i++) {
         /* initila to all 0 table */
-        g->inlink[i] = g->outlink[i] = 0;
+        new->wc[i] = new->inlink[i] = new->outlink[i] = 0;
     }
 
     return new;
+}
+
+void showGraph(graph g) {
+    /* show the link in the graph */
+    for (int src = 0; src < g->nV; src++) {
+        // print all the pages' name
+        printf("%s : ", g->str_l[src]);
+        // print its link table
+
+        for (size_t dest = 0; dest < g->nV; dest++) {
+            /* print every edges */
+            printf("%d ", g->edges[src][dest]);
+        }
+        // print a new line
+        printf("\n");
+    }
+
+
+    printf("\nThe information in hash table\n" );
+
+    // show the information in hash table
+    for (int src = 0; src < g->nV; src++) {
+        // print all the pages' name
+        printf("%s : ", g->str_l[src]);
+
+        // print the table
+        for (int this_node = 0; this_node < g->content[src]->max; this_node++) {
+            // print the information in this_node
+            if (g->content[src]->table[this_node]!= NULL){
+                // print the word and the counter
+                printf("%s:%d ",g->content[src]->table[this_node]->key,
+                        g->content[src]->table[this_node]->val.i );
+            }
+        }
+        // print the new line
+        printf("\n");
+    }
+
 }

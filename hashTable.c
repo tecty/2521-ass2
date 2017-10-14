@@ -15,7 +15,13 @@ unsigned int hash1(char *str,int seed){
 }
 int hash(char *str,int trail, int size){
     // double hashing to get the index of table
-    return (int) (hash1(str, 1) + trail * hash1(str, 3)) % size;
+    int this_hash = (int) (hash1(str, 1) + trail * hash1(str, 3)) % size;
+    if (this_hash<0) {
+        /* have the absolute value of hash value */
+        this_hash = - this_hash;
+    }
+
+    return this_hash;
 }
 
 int find_slot(hash_table t,char * key){
@@ -25,13 +31,15 @@ int find_slot(hash_table t,char * key){
         // find through the table by exhause the trail
         this_slot = hash(key, trail, t->max);
 
+        // printf("imhere %d %d\n", this_slot);
         if (t->table[this_slot] == NULL) {
             /* found the empty slot for this key */
             return -this_slot-1;
         }
-        if (strcmp(t->table[this_slot]->key,key)== 0) {
+        else if (strcmp(t->table[this_slot]->key,key)== 0) {
             /* found the key  */
             return this_slot;
+
         }
     }
     // couldn't found a slot for this
@@ -47,19 +55,26 @@ void expand_table(hash_table t) {
         /* clear all the pointer to NULL */
         new_table[i] = NULL;
     }
+    int trial = 0;
     for (int i = 0; i < t->max/2; i++) {
         /* search all the node in the table */
         if (t->table[i]!= NULL) {
             /* this slot has record，record this in the new table */
-            for (int trail = 0; trail < t->max; trail++) {
+            while ( trial < t->max) {
                 /* found new slot for this key */
-                int this_slot = hash(t->table[i]->key,trail,t->max);
+                int this_slot = hash(t->table[i]->key,trial,t->max);
                 if (new_table[this_slot] == NULL) {
                     /* here is an empty slot for insert this */
                     new_table[this_slot]= t->table[i];
                     // break the loop for this insertion
                     break;
                 }
+                trial++;
+            }
+            if (trial == t->max) {
+                /* this table is not enought too.. */
+                free(new_table);
+                expand_table(t);
             }
         }
     }
@@ -107,17 +122,58 @@ hash_node insert_node(hash_table t , char* key){
 
     while (this_slot == - t->max -1) {
         /* the table don't have enought space for this key */
+        expand_table(t);
         #ifdef DEBUG
             // debug output
-            printf("couldn't find slot to expand the table %d, for %s\n", this_slot,key);
+            printf("couldn't find slot, so expand the table %d, for %s\nexpand to size %d\n", this_slot,key, t->max);
         #endif
-        expand_table(t);
+
         this_slot = find_slot(t, key);
+
     }
-    assert(this_slot<0);
+    if (this_slot >= 0) {
+        /* end the programme */
+#ifdef DEBUG
+        printf("Error in slot %d\n",this_slot );
+        printf("the slot has key: %s ; search for key '%s'\n","null",key );
+        show_table(t);
+#endif
+        assert(this_slot<0);
+    }
     // no this key in table;
     hash_node this_node = malloc(sizeof(struct hash_node_t));
     this_node->key = strdup(key);
+    // refresh the counter of table
+    t->nItem ++;
+
     // return this_node
     return t->table[-this_slot -1 ]  = this_node;
+}
+
+
+void generalise_table(hash_table t){
+    int slow = 0;
+    for (int this = 0; this < t->max; this++) {
+        /* search for no empty slot */
+        if (t->table[this] != NULL) {
+            /* this slot is not empty */
+            t->table[slow] = t->table[this];
+            slow ++;
+        }
+    }
+    // resize this table;
+    t->max = t->nItem;
+    t->table = realloc(t->table, t->max*sizeof(hash_node));
+}
+
+void show_table(hash_table t){
+    for (int this = 0; this < t->max; this++) {
+        /* search for all the node in the table */
+        if (t->table[this] != NULL) {
+            /* print out this_node */
+            printf("%d:%s ", this,t->table[this]->key);
+        }
+    }
+    printf("\n" );
+
 }
