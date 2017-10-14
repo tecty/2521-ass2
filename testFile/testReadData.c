@@ -17,14 +17,14 @@ int main() {
 
     printf("\nPageranks\n" );
     // show the pagerank
-    show_pagerank();
+    show_pagerank(NULL);
     // show the weight_in and weight_out
     show_weight();
 
 
     // sort them and show the result
     sort_by_pr();
-    show_pagerank();
+    show_pagerank(NULL);
 
     return 0;
 }

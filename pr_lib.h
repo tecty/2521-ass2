@@ -9,7 +9,8 @@
 
 void PageRankW(graph g, double d, double diffPR,int maxIteration);
 
-void show_pagerank();
+// if the given fp is NULL, then it would print to stdout
+void show_pagerank(FILE *fp);
 void show_weight();
 void sort_by_pr();
 
