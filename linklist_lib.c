@@ -112,3 +112,62 @@ link init_link(){
     // return the struct just create
     return new;
 }
+
+
+ll_node do_filter_l(ll_node keep, link filter){
+    if (keep== NULL) {
+        /* reach the end of the keep list */
+        return NULL;
+    }
+    for (ll_node this_node = filter->head; this_node != NULL;
+         this_node= this_node->next) {
+        /* try to fileter it */
+        if (strcmp(keep->val, this_node->val)==0) {
+            /* found the node */
+            // arrange the link
+            keep ->next = do_filter_l(keep->next, filter);
+            // terminate this function
+            return keep ;
+        }
+    }
+    // this_node is not found; delet this node
+    // get the return value by recurse
+    ll_node return_node = do_filter_l(keep->next, filter);
+    // delete this_node
+    free (keep);
+    return return_node;
+
+}
+
+void filter_l(link keep, link filter){
+    // reconstruct the link by filter
+    keep->head = do_filter_l(keep->head, filter);
+
+    if (keep->head == NULL) {
+        /* deleted all the nodes */
+        keep->tail = NULL;
+        // nothing to do
+        return ;
+    }
+
+    if (keep->head->next == NULL){
+        // this list only have one node
+        keep ->head->next = NULL;
+    }
+
+    // reset the head has no prev node
+    keep->head->prev = NULL;
+
+    // record the loop process
+    ll_node this_node = keep->head;
+    // reconstruct the link
+    for (;this_node != NULL && this_node->next!= NULL;
+            this_node = this_node->next) {
+        /* re pointing back the list */
+        this_node->next->prev = this_node;
+    }
+
+    // repoint the tail
+    keep->tail = this_node;
+
+}

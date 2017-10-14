@@ -25,7 +25,7 @@ char *pop_l(link l);
 char *leave_l(link l);
 void show_l(link l);
 link init_link();
-void filter_l(link keep, filter);
+void filter_l(link keep, link filter);
 
 
 #endif

@@ -64,7 +64,7 @@ hash_table read_index(){
 
 
 
-    while (feof(fp) && fgets(buff,1000, fp)!= NULL ) {
+    while (!feof(fp) && fgets(buff,1000, fp)!= NULL ) {
         /* read by line */
         // reset the indent
         indent = 0;
@@ -73,6 +73,7 @@ hash_table read_index(){
             if (indent == 0) {
                 /* this is the first word */
                 this_node = insert_node(I_index, word);
+                printf("insert_node %s\n",word  );
                 // initial the link
                 this_node->val.l = init_link();
                 // first node have one more indent
@@ -118,11 +119,23 @@ void show_index(FILE *fp){
 
 void search_index(char *key){
     // filter list by list
-
-
+    if (search_list == NULL) {
+        /* the first keyword */
+        // init the list to keep
+        search_list = find_node(I_index, key)->val.l;
+        if (search_list == NULL) {
+            /* the first keyword don't point to any page */
+            // let the search_list point to an empty list
+            search_list = init_link();
+        }
+    }
+    else{
+        // not the first node, try to filter the list
+        filter_l(search_list, find_node(I_index, key)->val.l);
+    }
 }
 
-void get_result(){
+link get_result(){
     // return the final result of the list
     return search_list;
 }
