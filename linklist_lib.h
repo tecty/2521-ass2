@@ -1,10 +1,15 @@
 #ifndef LINKLIST_H
 #define LINKLIST_H
 
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
 typedef struct linklist_t {
     /* a linklist */
     char *val;
-    ll_node next;
+    struct linklist_t *prev;
+    struct linklist_t *next;
 } *ll_node;
 
 
@@ -14,8 +19,12 @@ typedef struct link_t {
     ll_node tail;
 } *link;
 
-void push(link l, char *val);
-void pop(link l, char *val);
-void leave(link l, char *val);
+void push_l(link l, char *val);
+void join_l(link l, char *val);
+char *pop_l(link l);
+char *leave_l(link l);
+void show_l(link l);
+link init_link();
+
 
 #endif
