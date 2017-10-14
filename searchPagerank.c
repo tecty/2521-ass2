@@ -21,21 +21,21 @@ int main(int argc, char const *argv[]) {
 
     // construct the index by file
     read_index();
-    
+
 #ifdef DEBUG
     // show the index it has read
-    show_index(NULL);
+    // show_index(NULL);
 #endif
 
 
     // search for the table
-    // for (int i = 1; i < argc; i++) {
-    //     /* give all the keywords to table */
-    //     search_index((char *) argv[i]);
-    // }
-    //
-    // // print the result
-    // print_l(get_result());
+    for (int i = 1; i < argc; i++) {
+        /* give all the keywords to table */
+        search_index((char *) argv[i]);
+    }
+
+    // print the result
+    print_l(get_result());
 
     return 0;
 }

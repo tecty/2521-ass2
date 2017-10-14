@@ -33,7 +33,7 @@ int main(int argc, char const *argv[]) {
     set_index(g);
 
     // print the index into the file
-    fp = fopen("invertedIndex.txt","w+");
+    fp = fopen("invertedIndex.txt","w");
     show_index(fp);
     fclose(fp);
 

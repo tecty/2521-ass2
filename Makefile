@@ -7,7 +7,7 @@ DEPS = graph.h hashTable.h index_lib.h linklist_lib.h pr_lib.h readData.h
 
 # for all the require programme name
 #  invertedIndex
-all: pagerank
+all: pagerank searchPagerank
 
 
 
@@ -32,3 +32,5 @@ searchPagerank:searchPagerank.c graph.o hashTable.o index_lib.o linklist_lib.o
 clean:
 	rm *.o *.gch pagerank invertedIndex -f
 	rm testReadData testHashTable testLL
+	# may trigger some bug, even i fixed it..
+	rm *.txt

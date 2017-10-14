@@ -72,10 +72,22 @@ hash_table read_index(){
             /* read word by word */
             if (indent == 0) {
                 /* this is the first word */
-                this_node = insert_node(I_index, word);
-                printf("insert_node %s\n",word  );
-                // initial the link
-                this_node->val.l = init_link();
+                this_node = find_node(I_index,word);
+                // if (this_node== NULL) {
+                    /* code */
+                    this_node= insert_node(I_index, word);
+
+                    // initial the link
+                    this_node->val.l = init_link();
+                // }
+                // else {
+                //     free(this_node->val.l);
+                //     // initial the link
+                //     this_node->val.l = init_link();
+                // }
+
+                // this node has initilised
+                indent = 0;
                 // first node have one more indent
                 indent ++;
             }

@@ -45,42 +45,51 @@ int find_slot(hash_table t,char * key){
     // couldn't found a slot for this
     return -t->max-1;
 }
-void expand_table(hash_table t) {
-    /* expand the insufficient */
-    t->max *= 2;
-    // intilise the pointer array for nodes
-    hash_node *new_table = malloc(t->max * sizeof(hash_node));
-    assert(new_table != NULL);
-    for (int i = 0; i < t->max; i++) {
-        /* clear all the pointer to NULL */
-        new_table[i] = NULL;
+void expand_table(hash_table table) {
+    /* double the table size */
+    table->max *= 2;
+
+    // pointer list
+    hash_node *new = malloc(table->max * sizeof(hash_node));
+    assert(new != NULL);
+    // suppor for old c standard
+    int i=0;
+
+    // initial the table
+    for (i = 0; i < table->max; i++) {
+        /* initial all table, pointing then to NULL */
+        new[i] = NULL;
     }
+
     int trial = 0;
-    for (int i = 0; i < t->max/2; i++) {
-        /* search all the node in the table */
-        if (t->table[i]!= NULL) {
-            /* this slot has record，record this in the new table */
-            while ( trial < t->max) {
-                /* found new slot for this key */
-                int this_slot = hash(t->table[i]->key,trial,t->max);
-                if (new_table[this_slot] == NULL) {
-                    /* here is an empty slot for insert this */
-                    new_table[this_slot]= t->table[i];
-                    // break the loop for this insertion
+    // rehashing the table
+    for (i = 0; i < table->max/2; i++) {
+        /* for every key value in the old str_table */
+        // reset the trial
+        trial = 0;
+        if (table->table[i]!= NULL) {
+            /* this location has value before, do rehashing */
+            hash_node this_node =  table ->table[i];
+            while (trial< table->max/2) {
+                /* try to inser this node into new table */
+                int this_hash =hash(this_node->key, trial, table->max);
+                if (new[this_hash]== NULL) {
+                    /* this slot is empty, insert into this slot */
+                    new[this_hash] = this_node;
                     break;
+                }else{
+                    trial ++;
                 }
-                trial++;
-            }
-            if (trial == t->max) {
-                /* this table is not enought too.. */
-                free(new_table);
-                expand_table(t);
             }
         }
     }
-    // swap the table
-    free(t->table);
-    t->table = new_table;
+
+
+    // free the old table
+    free(table->table);
+
+    // assign the new one to pressive
+    table->table = new;
 }
 
 hash_table init_table(){
@@ -118,36 +127,32 @@ hash_node find_node(hash_table t, char * key){
 
 hash_node insert_node(hash_table t , char* key){
     // calculate the slot for this key
-    int  this_slot = find_slot(t, key);
-
-    while (this_slot == - t->max -1) {
-        /* the table don't have enought space for this key */
+    if (t->nItem > (t->max/3) *2) {
+        /* couldn't be more than 2/3 of max */
         expand_table(t);
-        #ifdef DEBUG
-            // debug output
-            printf("couldn't find slot, so expand the table %d, for %s\nexpand to size %d\n", this_slot,key, t->max);
-        #endif
-
-        this_slot = find_slot(t, key);
-
     }
-    if (this_slot >= 0) {
-        /* end the programme */
-#ifdef DEBUG
-        printf("Error in slot %d\n",this_slot );
-        printf("the slot has key: %s ; search for key '%s'\n","null",key );
-        show_table(t);
-#endif
-        assert(this_slot<0);
+    int  this_slot;
+    while ((this_slot = find_slot(t,key)) == -t->max -1) {
+        /* couldn't find slot for this key */
+        expand_table(t);
     }
-    // no this key in table;
-    hash_node this_node = malloc(sizeof(struct hash_node_t));
-    this_node->key = strdup(key);
-    // refresh the counter of table
-    t->nItem ++;
+
+    // the slot number must exist in the table
+    assert(this_slot<=0);
+
+    t->nItem++;
+
+    // insert for this node
+    hash_node new = malloc(sizeof(struct hash_node_t));
+
+    // check whether this is successful malloc
+    assert(new != NULL);
+
+    // duplicate its' key
+    new->key = strdup(key);
 
     // return this_node
-    return t->table[-this_slot -1 ]  = this_node;
+    return t->table[-this_slot -1 ]  = new;
 }
 
 
