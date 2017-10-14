@@ -26,7 +26,7 @@ int main(int argc, char const *argv[]) {
 
     // try to write to a file
     FILE *fp=fopen("pagerankList.txt","w+");
-    show_pagerank(NULL);
+    show_pagerank(fp);
     fclose(fp);
 
 
