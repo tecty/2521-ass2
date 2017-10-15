@@ -1,4 +1,4 @@
-#include "index_lib.h"
+#include "dictionary.h"
 
 int main(int argc, char const *argv[]){
     if(argc<=1){ //invalid input
