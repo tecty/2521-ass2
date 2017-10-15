@@ -160,10 +160,19 @@ void readCollection(graph g) {
     // resize the edge table;
     g->edges = realloc(g->edges,g->nV * sizeof(int *));
     assert(g->edges!= NULL);
+	
+    printf("%d\n",g->nV);    
+
     for (int i = 0; i < g->nV; i++) {
         /* malloc all the sub list in memory */
-        g->edges[i]= realloc(g->edges[i],g->nV * sizeof(int *));
-        assert(g->edges[i]!= NULL);
+        if(0 &&  g->edges[i] != NULL){
+
+	    g->edges[i]= realloc(g->edges[i],g->nV * sizeof(int));
+        }
+	else{
+	    g->edges[i]= malloc(g->nV*sizeof(int));
+	}
+	assert(g->edges[i]!= NULL);
         /* reset the int value in edge list */
         for (int j = 0; j < g->nV; j++) {
             /* initialised all the edges */
