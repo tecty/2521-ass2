@@ -49,7 +49,7 @@ void calculate_tfIdf(char *keyword, hash_table read, graph g){
     int idf_num = g->nV;
     printf("The system has totally %d files\n", idf_num);
     //now calculate idf
-    idf = (double)idf_num/idf_base;
+    idf = log10((double)idf_num/idf_base);
     printf("The idf for the word %s is %lf\n", keyword, idf);
     //scanning each file, for each file:
     for(int i = 0; i < g->nV; i++){

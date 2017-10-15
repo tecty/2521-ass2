@@ -1,4 +1,5 @@
 #include "index_lib.h"
+#include <math.h>
 #include "string.h"
 
 typedef struct file_dictionary{
