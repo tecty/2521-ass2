@@ -10,8 +10,9 @@ int main(int argc, char *argv[]){
     graph g = initGraph(0);
     getCollection(g);
     hash_table read = read_index();
+    init_tfidf(g);
     for(int i = 1; i<argc; i++){
         calculate_tfIdf(argv[i], read, g);
     }
-    show_result();
+    show_result(g);
 }

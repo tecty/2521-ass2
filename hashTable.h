@@ -13,7 +13,7 @@ union val_u{
     int i;
     // in the linklist lib, the type
     link l;
-
+    double *result;
 };
 
 typedef struct hash_node_t {

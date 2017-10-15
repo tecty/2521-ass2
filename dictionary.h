@@ -1,14 +1,12 @@
 #include "index_lib.h"
 #include <math.h>
-#include "string.h"
 
-typedef struct file_dictionary{
-    char *file_name;
-    double tfidf;
-} *file_dict;
+//prepared for mergesort
+typedef struct tfidf_summary{
+    char **fileName;
+    double *tfidfSum;
+} *summary;
 
-int file_count(link);
-int searchInResult(char *);
-void insert_dict(char *, double);
-void calculate_tfIdf(char *, hash_table, graph);
+hash_table init_tfidf();
+void calculate_tfIdf(char *keyword, hash_table read, graph g);
 void show_result();

@@ -1,7 +1,19 @@
 #include "dictionary.h"
 
-file_dict *result = NULL; //the list of pages which have tfidf != 0 for searching key words
-int length = 0; //the length of the above list
+hash_table tfidf_result;
+summary final;
+
+hash_table init_tfidf(graph g){
+    tfidf_result = init_table();
+    final = malloc(sizeof(struct tfidf_summary));
+    final->fileName = malloc(g->nV*sizeof(char *));
+    final->tfidfSum = malloc(g->nV*sizeof(double));
+    for(int i = 0; i<g->nV; i++){
+        final->fileName[i] = g->str_l[i];
+        final->tfidfSum[i] = 0;
+    }
+    return tfidf_result;
+}
 
 int file_count(link files){
     ll_node p = files->head;
@@ -13,24 +25,9 @@ int file_count(link files){
     return total;
 }
 
-//only search item in the tfIdf list (graph does not contain tfidf value)
-int searchInResult(char *file){
-    if(length == 0) return -1; //list is empty
-    for(int index = 0; index < length; index++){
-        if(strcmp(result[index]->file_name, file)==0){ //found
-            return index;
-        }
-    }
-    return -1; //not found
-}
-
-void insert_dict(char *file, double tfidf){
-    file_dict new = malloc(sizeof(struct file_dictionary));
-    new->file_name = file;
-    new->tfidf = tfidf;
-    result = realloc(result, (length+1) * sizeof(file_dict));
-    result[length] = new;
-    length++;
+void init_singleResult(hash_node new, graph g){
+    new->val.result = malloc(g->nV*sizeof(double));
+    for(int i = 0; i < g->nV; i++) new->val.result[i] = 0;
 }
 
 void calculate_tfIdf(char *keyword, hash_table read, graph g){
@@ -40,7 +37,7 @@ void calculate_tfIdf(char *keyword, hash_table read, graph g){
     double tf; //change when scanning each file
     double idf; //never change when searching for one word
     double tfidf; //change when scanning each file
-    //find keyword in I_index
+    //find keyword in read
     hash_node this1 = find_node(read, keyword);
     //count how many pages after the keyword -> base of idf
     int idf_base = file_count(this1->val.l);
@@ -70,20 +67,15 @@ void calculate_tfIdf(char *keyword, hash_table read, graph g){
             tf = (double)freq/wc;
             printf("The tf of the word %s in the file %s is %lf\n", keyword, g->str_l[i], tf);
             //search if file is in the "result" list
-            int pos = searchInResult(g->str_l[i]);
-            //if exist
-            if(pos!=-1){
-                printf("The page already has the value %lf, add on value %lf\n", result[pos]->tfidf, tf*idf);
-                //add on tfidf value
-                result[pos]->tfidf += tf*idf;
+            hash_node insert = find_node(tfidf_result, keyword);
+            if(insert==NULL){
+                printf("APPEND\n");
+                insert = insert_node(tfidf_result, keyword);
+                init_singleResult(insert, g);
             }
-            else{
-                printf("This page is not in the output list. Append this page with value %lf\n", tf*idf);
-                //add the file into the list and assign tfidf value
-                insert_dict(g->str_l[i], tf*idf);
-            }
+            insert->val.result[i] += tf*idf;
+            final->tfidfSum[i] += tf*idf;
         }
-        //else skip
         else{
             printf("The file does not have this word\n");
             continue;
@@ -91,10 +83,9 @@ void calculate_tfIdf(char *keyword, hash_table read, graph g){
     }
 }
 
-void show_result(){
-    if(result!=NULL){
-        //mergesort(result); // not implemented yet
-        for(int i = 0; i < length; i++)
-            printf("%s  %lf\n", result[i]->file_name, result[i]->tfidf);
+void show_result(graph g){ //sort is not implemented yet
+    printf("%d\n", g->nV);
+    for (int i = 0; i < g->nV; i++) {
+        printf("%s %lf\n", final->fileName[i], final->tfidfSum[i]);
     }
 }
