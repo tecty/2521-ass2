@@ -8,4 +8,4 @@ typedef struct file_dictionary{
 int file_count(link);
 int searchInResult(char *);
 void insert_dict(char *, double);
-void calculate_tfIdf(char *, graph);
+void calculate_tfIdf(char *, hash_table, graph);

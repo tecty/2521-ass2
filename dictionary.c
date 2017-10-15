@@ -1,4 +1,5 @@
 #include "dictionary.h"
+#include "mergesort.h"
 
 file_dict *result = NULL; //the list of pages which have tfidf != 0 for searching key words
 int length = 0; //the length of the above list
@@ -30,15 +31,15 @@ void insert_dict(char *file, double tfidf){
     length++;
 }
 
-void calculate_tfIdf(char *keyword, graph g){
+void calculate_tfIdf(char *keyword, hash_table read, graph g){
     //register the new word into the dictionary
     double tf; //change when scanning each file
     double idf; //never change when searching for one word
     double tfidf; //change when scanning each file
     //find keyword in I_index
-    hash_node slot = find_slot(I_index, keyword);
+    int slot = find_slot(read, keyword);
     //count how many pages after the keyword -> base of idf
-    int idf_base = file_count(slot->val.l);
+    int idf_base = file_count(read[slot]->val.l);
     //get the nV of g -> numerator of idf
     int idf_num = g->nV;
     //now calculate idf
@@ -46,13 +47,13 @@ void calculate_tfIdf(char *keyword, graph g){
     //scanning each file, for each file:
     for(int i = 0; i < nV; i++){
         //find if the word exists in the file
-        hash_node slot_f = find_slot(g->content[i], keyword);
+        int slot_f = find_slot(g->content[i], keyword);
         //if the word exists in the file (frequency!=0)
         if(slot_f!=NULL){
             //get the frequency of the word
-            int freq = slot_f->val.i;
+            int freq = g->content[slot_f]->val.i;
             //get the total word count of the file
-            int wc = g->wc[i];
+            int wc = g->wc[slot_f];
             //now calculate tf
             tf = (double)freq/wc;
             //search if file is in the "result" list
@@ -71,5 +72,9 @@ void calculate_tfIdf(char *keyword, graph g){
 }
 
 void show_result(){
-
+    if(result!=NULL){
+        mergesort(result); // not implemented yet
+        for(int i = 0; i < length; i++)
+            printf("%s  %lf\n", result[i]->file_name, result[i]->tfidf);
+    }
 }
