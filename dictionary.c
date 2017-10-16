@@ -140,8 +140,12 @@ void mergesort(summary final, int size){
 
 void show_result(graph g){ //sort is not implemented yet
     mergesort(final, g->nV);
+    int count = 0;
     for (int i = 0; i < g->nV; i++) {
-        if(final->tfidfSum[i]!=0)
+        if(count>=30) break;
+        if(final->tfidfSum[i]!=0){
             printf("%s %.6f\n", final->fileName[i], final->tfidfSum[i]);
+            count++;
+        }
     }
 }
