@@ -162,7 +162,7 @@ void readCollection(graph g) {
     g->edges = realloc(g->edges,g->nV * sizeof(int *));
     assert(g->edges!= NULL);
 
-    printf("%d\n",g->nV);
+    //printf("%d\n",g->nV);
 
     for (int i = 0; i < g->nV; i++) {
         /* malloc all the sub list in memory */
