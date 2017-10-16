@@ -53,8 +53,9 @@ void getSect2(graph g, FILE *fp, int src) {
         if (strcmp("#end", buff) == 0) {
             /* push one more to end this session*/
             fscanf(fp, "%s",buff);
+            // here is not just a word count in part2
             // generalise the table because it just a word count
-            generalise_table(t);
+            // generalise_table(t);
             break;
         }
 
@@ -160,8 +161,8 @@ void readCollection(graph g) {
     // resize the edge table;
     g->edges = realloc(g->edges,g->nV * sizeof(int *));
     assert(g->edges!= NULL);
-	
-    printf("%d\n",g->nV);    
+
+    printf("%d\n",g->nV);
 
     for (int i = 0; i < g->nV; i++) {
         /* malloc all the sub list in memory */

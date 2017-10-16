@@ -26,6 +26,10 @@ hash_table set_index(graph g){
 
     for (int v = 0; v < g->nV; v++) {
         /* go throught all the vertex */
+        // first generalise all the hashTable would be used
+        generalise_table(g->content[v]);
+
+
         for (int i = 0; i < g->content[v]->nItem; i++) {
             /* go throught all the words */
             this = find_node(I_index, g->content[v]->table[i]->key);
@@ -73,18 +77,12 @@ hash_table read_index(){
             if (indent == 0) {
                 /* this is the first word */
                 this_node = find_node(I_index,word);
-                // if (this_node== NULL) {
-                    /* code */
-                    this_node= insert_node(I_index, word);
 
-                    // initial the link
-                    this_node->val.l = init_link();
-                // }
-                // else {
-                //     free(this_node->val.l);
-                //     // initial the link
-                //     this_node->val.l = init_link();
-                // }
+                // insert for this word
+                this_node= insert_node(I_index, word);
+
+                // initial the link
+                this_node->val.l = init_link();
 
                 // this node has initilised
                 indent = 0;

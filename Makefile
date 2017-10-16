@@ -1,4 +1,4 @@
-CC = dcc
+CC = clang
 CFLAGS = -Wall -Werror -g -DDEBUG -Wextra
 # just need to put all the depended .h files,
 # it would look for the file.c with same name
