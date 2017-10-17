@@ -17,6 +17,7 @@ typedef struct link_t {
     /* a queue point to start node and an end */
     ll_node head;
     ll_node tail;
+    int total;
 } *link;
 
 void push_l(link l, char *val);
