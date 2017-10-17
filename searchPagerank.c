@@ -1,15 +1,7 @@
 // the searching engine for invertedIndex
 #include "index_lib.h"
 
-void print_l(link l) {
-    /* just for this file */
-    // print the content in the list by new line
-    for (ll_node this_node = l->head; this_node != NULL;
-        this_node = this_node->next) {
-        /* for every node in the linklist */
-        printf("%s\n", this_node->val);
-    }
-}
+
 
 int main(int argc, char const *argv[]) {
     /* read the file and try to search something */

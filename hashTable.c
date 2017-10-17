@@ -182,6 +182,36 @@ void generalise_table(hash_table t){
     qsort(t->table,t->max, sizeof(hash_node),hash_node_cmp);
 }
 
+int hash_node_cmp_int(const void *a,const void *b){
+    // cmpare function for using in C-lib qsort;
+    hash_node *n1 = (hash_node *) a;
+    hash_node *n2 = (hash_node *) b;
+    // return the comparison
+    return (*n1)->val.i - (*n2)->val.i;
+
+}
+
+void sort_table_by_int(hash_table t){
+    int slow = 0;
+    for (int this = 0; this < t->max; this++) {
+        /* search for no empty slot */
+        if (t->table[this] != NULL) {
+            /* this slot is not empty */
+            t->table[slow] = t->table[this];
+            slow ++;
+        }
+    }
+    // resize this table;
+    t->max = t->nItem;
+    t->table = realloc(t->table, t->max*sizeof(hash_node));
+
+    // sorting the table by the string in the struct
+    qsort(t->table,t->max, sizeof(hash_node),hash_node_cmp_int);
+
+}
+
+
+
 void show_table(hash_table t){
     for (int this = 0; this < t->max; this++) {
         /* search for all the node in the table */

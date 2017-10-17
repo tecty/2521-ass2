@@ -26,6 +26,7 @@ char *leave_l(link l);
 void show_l(link l);
 link init_link();
 void filter_l(link keep, link filter);
-
+// show the order by just print new line, without any format
+void print_l(link l);
 
 #endif

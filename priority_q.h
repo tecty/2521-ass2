@@ -19,6 +19,9 @@ typedef struct pq_node_t {
 typedef struct priority_q_t {
     // size of this matrix if the matrix is 5*5, the size is 5
     int size;
+    // total distance after end of leaving
+    double total;
+
     // a list of node, initial is 25 = 5*5, use as a 2D-array
     pq_node *list;
     // the head of the link list, after sorted

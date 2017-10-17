@@ -26,12 +26,15 @@ priority_q init_pq(int size){
         }
     }
     new->head = NULL;
+    // initial the distance recorder
+    new->total = 0;
+
     // return initialised struct
     retrun new;
 }
 void join_pq(priority_q q, int index, int order, int dist){
     // set the correspond node to have that distance
-    q->list[index][order]->dist = dist;
+    q->list[index][order]->dist += dist;
 }
 
 int pq_cmp(const void *a, const void *b){
@@ -112,6 +115,9 @@ int leave_pq(priority_q q){
     //  else:
     // the index that removed in this leave
     int return_index = q->head->index;
+    // update the total distance
+    q->total += q->head->dist;
+
     // set up the new head by removing the nodes
     this->head = do_leave_pq(q->head,q->head->index, q->head->order);
 
