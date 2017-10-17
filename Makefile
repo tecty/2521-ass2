@@ -30,7 +30,7 @@ searchPagerank:searchPagerank.c graph.o hashTable.o index_lib.o linklist_lib.o
 
 
 clean:
-	rm *.o *.gch pagerank invertedIndex -f
-	rm testReadData testHashTable testLL
+	rm *.o *.gch pagerank invertedIndex searchPagerank -f
+	rm -f testReadData testHashTable testLL
 	# may trigger some bug, even i fixed it..
 	rm *.txt
