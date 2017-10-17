@@ -156,6 +156,14 @@ hash_node insert_node(hash_table t , char* key){
 }
 
 
+int hash_node_cmp(const void *a,const void *b){
+    // cmpare function for using in C-lib qsort;
+    hash_node *n1 = (hash_node *) a;
+    hash_node *n2 = (hash_node *) b;
+    // return the comparison
+    return strcmp((*n1)->key, (*n2)->key);
+}
+
 void generalise_table(hash_table t){
     int slow = 0;
     for (int this = 0; this < t->max; this++) {
@@ -169,6 +177,9 @@ void generalise_table(hash_table t){
     // resize this table;
     t->max = t->nItem;
     t->table = realloc(t->table, t->max*sizeof(hash_node));
+
+    // sorting the table by the string in the struct
+    qsort(t->table,t->max, sizeof(hash_node),hash_node_cmp);
 }
 
 void show_table(hash_table t){

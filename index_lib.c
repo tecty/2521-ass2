@@ -111,8 +111,16 @@ void show_index(FILE *fp){
         /* print to stdout */
         fp = stdout;
     }
+    else{
+        // print to a given file
+        // generalise_table would sort the table and reduce the NULL link
+        generalise_table(I_index);
+    }
+
+
     for (int i = 0; i < I_index->max; i++) {
         /* search for all the node */
+
         if (I_index->table[i] != NULL) {
             /* show its key */
             fprintf(fp, "%s ",I_index->table[i]->key );
