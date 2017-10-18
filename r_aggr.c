@@ -80,12 +80,14 @@ void show_rank(FILE *fp){
             }
             count++;
         }
+#ifdef DEBUG
+        printf("\nFor order_list[%d], inserted\n",i );
+        show_pq(queue);
+#endif
+
+
     }
 
-    //for (int i = 0; i < file_count*file_count; i++){
-        //printf("%lf   ", queue->list[i]->dist);
-        //if((i+1)%file_count==0) putchar('\n');
-    //}
     // generalise the hashtable by it's pageno
     sort_table_by_int(t);
 
