@@ -17,13 +17,13 @@ void distnameArray_free(){
 }
 
 int find_page(char *pageName){
-    printf("FINDING %s in %d files\n", pageName, total_files);
+    //printf("FINDING %s in %d files\n", pageName, total_files);
     int i;
     for(i = 0; i<total_files && nameArray[i]!=NULL; i++){
         if(strcmp(nameArray[i], pageName)==0) return i;
     }
     if(i<total_files){
-        printf("Now %d files are registered\n", i);
+        //printf("Now %d files are registered\n", i);
         nameArray[i] = pageName;
         return i;
     }
@@ -74,7 +74,7 @@ int pq_cmp(const void *a, const void *b){
     pq_node * n1 = (pq_node *)a;
     pq_node * n2 = (pq_node *)b;
     // calculate the diff between the value hold in both nodes
-    double diff = (*n1) ->order - (*n2) -> order;
+    double diff = (*n1) ->dist - (*n2) -> dist;
     // base the difference, return the compare result
 
     if (diff>0) {
@@ -136,7 +136,7 @@ pq_node do_leave_pq(pq_node this, int index , int order){
     return this;
 }
 
-int leave_pq(priority_q q){
+int leave_pq(priority_q q, int *result){
     if (q->list != NULL) {
         /* the queue is not leaved */
         // sort the list
@@ -145,9 +145,17 @@ int leave_pq(priority_q q){
 #ifdef DEBUG
 
     printf("\nTry to leave a node in queue\n");
+    //test if sorted
+    int smallCount = 0;
+    printf("SORT!\n");
+    for(pq_node p = q->head; p!=NULL; p = p->next){
+        printf("%lf->", p->dist);
+        if((smallCount+1)%5==0) putchar('\n');
+        smallCount++;
+    }
+
 
 #endif
-
     // special situation, all the node has leaved the queue
     if (q->head == NULL) {
         /* code */
@@ -155,7 +163,8 @@ int leave_pq(priority_q q){
     }
     //  else:
     // the index that removed in this leave
-    int return_index = q->head->index;
+    int order = q->head->order;
+    result[order] = q->head->index;
     // update the total distance
     q->total += q->head->dist;
 
@@ -163,5 +172,5 @@ int leave_pq(priority_q q){
     q->head = do_leave_pq(q->head,q->head->index, q->head->order);
 
     // return this index for this leave
-    return return_index;
+    return order;
 }

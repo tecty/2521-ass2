@@ -27,7 +27,7 @@ testLL: test_linklist.c linklist_lib.o
 	$(CC) -o $@ $^ $(CFLAGS)
 searchPagerank:searchPagerank.c graph.o hashTable.o index_lib.o linklist_lib.o
 	$(CC) -o $@ $^ $(CFLAGS)
-scaledFootrule:scaledFootrule.c graph.o hashTable.o index_lib.o linklist_lib.o r_aggr.o priority_q.o
+scaledFootrule:hybrid.c graph.o hashTable.o index_lib.o linklist_lib.o r_aggr.o priority_q.o
 	$(CC) -o $@ $^ $(CFLAGS)
 
 clean:

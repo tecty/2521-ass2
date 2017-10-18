@@ -18,7 +18,7 @@ double abs_d (double d ){
 double cal_dist(int order ,int expect_order, int list_len){
     // calculate this page dist in this order
     // order would start at 0 here
-    printf("abs_d(%d/%d - %d/%d)\n", order+1, list_len, expect_order+1, file_count);
+    //printf("abs_d(%d/%d - %d/%d)\n", order+1, list_len, expect_order+1, file_count);
     double result = abs_d((order +1)/(double)list_len
             - (expect_order+1)/(double)file_count );
     //printf("RESULT: %lf \n", result);
@@ -67,7 +67,7 @@ void show_rank(FILE *fp){
         /* for all the given order, increment it's distance */
         // record how many pages in the order
         int list_len = count_l(order_list[i]);
-        printf("NOW SCANNING FOR ORDER LIST %d\n", i);
+        //printf("NOW SCANNING FOR ORDER LIST %d\n", i);
         int count = 0;
         while ((this_page = pop_l(order_list[i]))!= NULL) {
             /* for all the pagename */
@@ -82,26 +82,28 @@ void show_rank(FILE *fp){
         }
     }
 
-    for (int i = 0; i < file_count*file_count; i++){
-        printf("%lf   ", queue->list[i]->dist);
-        if((i+1)%file_count==0) putchar('\n');
-    }
+    //for (int i = 0; i < file_count*file_count; i++){
+        //printf("%lf   ", queue->list[i]->dist);
+        //if((i+1)%file_count==0) putchar('\n');
+    //}
     // generalise the hashtable by it's pageno
     sort_table_by_int(t);
 
-
     // final list of order for return
-    link l = init_link();
-
-    int this_page_no;
-    while (( this_page_no = leave_pq(queue)) != -1) {
+    //link l = init_link();
+    // the array recording final results
+    int *result = malloc(file_count * sizeof(int));
+    char **result_page = malloc(file_count * sizeof(char*));
+    int this_page_order;
+    while (( this_page_order = leave_pq(queue, result)) != -1) {
         /* leave every element in the priority queue */
         // search the pagename by leaved pageno
-        join_l(l, t->table[this_page_no]->key);
+        result_page[this_page_order] = t->table[result[this_page_order]]->key;
     }
-
-    fprintf(fp, "%lf\n", queue->total);
-    print_l(l,fp);
+    printf("%lf\n", queue->total);
+    for(int i = 0; i < file_count; i++){
+        printf("%s\n", result_page[i]);
+    }
 
     // free the table has used
     for (int i = 0; i < order_count; i++) {
@@ -112,6 +114,9 @@ void show_rank(FILE *fp){
     free(order_list);
     order_list = NULL;
     order_count = 0;
+    distnameArray_free();
+    free(result);
+    free(result_page);
 }
 
 
