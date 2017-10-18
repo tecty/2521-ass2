@@ -5,6 +5,8 @@
 #include "linklist_lib.h"
 #include "stdlib.h"
 #include <string.h>
+#include "strdup.h"
+
 #include <assert.h>
 
 void show_index(FILE *fp);

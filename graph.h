@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include "strdup.h"
 #include <string.h>
 #include "hashTable.h"
 

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "strdup.h"
 
 typedef struct pq_node_t {
     int index;

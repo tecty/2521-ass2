@@ -3,6 +3,8 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "strdup.h"
+
 #include <stdio.h>
 
 typedef struct linklist_t {
