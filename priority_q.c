@@ -1,4 +1,35 @@
 #include "priority_q.h"
+
+char **nameArray;
+int total_files = 0;
+
+//ensure that the same page will always locate to the same position in the WCP chart
+void distnameArray_init(int size){
+    nameArray = malloc(size*sizeof(char *));
+    total_files = size;
+    for(int i = 0; i < size; i++){
+        nameArray[i] = NULL;
+    }
+}
+
+void distnameArray_free(){
+    free(nameArray);
+}
+
+int find_page(char *pageName){
+    printf("FINDING %s in %d files\n", pageName, total_files);
+    int i;
+    for(i = 0; i<total_files && nameArray[i]!=NULL; i++){
+        if(strcmp(nameArray[i], pageName)==0) return i;
+    }
+    if(i<total_files){
+        printf("Now %d files are registered\n", i);
+        nameArray[i] = pageName;
+        return i;
+    }
+    return -1;
+}
+
 pq_node init_pq_node(int index, int order){
     pq_node new = malloc(sizeof(struct pq_node_t));
     // initial the value in the node
@@ -32,8 +63,9 @@ priority_q init_pq(int size){
     // return initialised struct
     return new;
 }
-void join_pq(priority_q q, int index, int order, double dist){
+void join_pq(priority_q q, char *pageName, int order, double dist){
     // set the correspond node to have that distance
+    int index = find_page(pageName);
     q->list[index* q->size + order]->dist += dist;
 }
 
@@ -42,7 +74,7 @@ int pq_cmp(const void *a, const void *b){
     pq_node * n1 = (pq_node *)a;
     pq_node * n2 = (pq_node *)b;
     // calculate the diff between the value hold in both nodes
-    double diff = (*n1) ->dist - (*n2) -> dist;
+    double diff = (*n1) ->order - (*n2) -> order;
     // base the difference, return the compare result
 
     if (diff>0) {

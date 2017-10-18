@@ -56,7 +56,7 @@ void show_rank(FILE *fp){
 
     // record the file_count;
     file_count = t->nItem;
-
+    distnameArray_init(file_count);
     // initial the priority_q with the size of pages
     priority_q queue = init_pq(t->nItem);
 
@@ -72,11 +72,11 @@ void show_rank(FILE *fp){
         while ((this_page = pop_l(order_list[i]))!= NULL) {
             /* for all the pagename */
             // get this pageid from hash table
-            int this_page_no = find_node(t,this_page)->val.i;
-            printf("%s at position %d\n", this_page, count+1);
+            //int this_page_no = find_node(t,this_page)->val.i;
+            //printf("%s at position %d\n", this_page, count+1);
             for (int o = 0; o < t->nItem; o++) {
                 /* for all the order of this page, update its' value */
-                join_pq(queue,this_page_no,o,cal_dist(count,o,list_len));
+                join_pq(queue,this_page,o,cal_dist(count,o,list_len));
             }
             count++;
         }
