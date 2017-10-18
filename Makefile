@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Werror -g -Wextra -DDEBUG
+CFLAGS = -std=c11 -Wall -Werror -g -Wextra -DDEBUG
 # just need to put all the depended .h files,
 # it would look for the file.c with same name
 DEPS =r_aggr.h priority_q.h graph.h hashTable.h inverted.h linklist_lib.h pr_lib.h readData.h

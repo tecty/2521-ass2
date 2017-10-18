@@ -1,5 +1,5 @@
 #include "hashTable.h"
-
+#include "string.h"
 
 unsigned int hash1(char *str,int seed){
     unsigned int sum= 0;
