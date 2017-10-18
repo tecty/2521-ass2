@@ -29,7 +29,7 @@ typedef struct priority_q_t {
 } *priority_q;
 
 priority_q init_pq(int size);
-void join_pq(priority_q q, int index, int order, int dist);
+void join_pq(priority_q q, int index, int order, double dist);
 void sort_pq(priority_q q);
 int leave_pq(priority_q q);
 

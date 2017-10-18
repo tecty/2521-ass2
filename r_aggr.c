@@ -18,8 +18,11 @@ double abs_d (double d ){
 double cal_dist(int order ,int expect_order, int list_len){
     // calculate this page dist in this order
     // order would start at 0 here
-    return abs_d((order +1)/(double)list_len
+    printf("abs_d(%d/%d - %d/%d)\n", order+1, list_len, expect_order+1, file_count);
+    double result = abs_d((order +1)/(double)list_len
             - (expect_order+1)/(double)file_count );
+    //printf("RESULT: %lf \n", result);
+    return result;
 }
 
 void show_rank(FILE *fp){
@@ -62,22 +65,27 @@ void show_rank(FILE *fp){
 
     for (int i = 0; i < order_count; i++) {
         /* for all the given order, increment it's distance */
-        // tmp for count the order for each page
-        int this_order = 0;
         // record how many pages in the order
         int list_len = count_l(order_list[i]);
+        printf("NOW SCANNING FOR ORDER LIST %d\n", i);
+        int count = 0;
         while ((this_page = pop_l(order_list[i]))!= NULL) {
             /* for all the pagename */
             // get this pageid from hash table
             int this_page_no = find_node(t,this_page)->val.i;
-
+            printf("%s at position %d\n", this_page, count+1);
             for (int o = 0; o < t->nItem; o++) {
                 /* for all the order of this page, update its' value */
-                join_pq(queue,this_page_no,o,cal_dist(this_order,o,list_len));
+                join_pq(queue,this_page_no,o,cal_dist(count,o,list_len));
             }
+            count++;
         }
     }
 
+    for (int i = 0; i < file_count*file_count; i++){
+        printf("%lf   ", queue->list[i]->dist);
+        if((i+1)%file_count==0) putchar('\n');
+    }
     // generalise the hashtable by it's pageno
     sort_table_by_int(t);
 

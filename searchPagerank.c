@@ -27,7 +27,7 @@ int main(int argc, char const *argv[]) {
     }
 
     // print the result
-    print_l(get_result());
+    print_l(get_result(),NULL);
 
     return 0;
 }

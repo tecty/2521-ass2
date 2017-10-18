@@ -1,4 +1,4 @@
-CC = clang
+CC = dcc
 CFLAGS = -Wall -Werror -g -DDEBUG -Wextra
 # just need to put all the depended .h files,
 # it would look for the file.c with same name
@@ -7,7 +7,7 @@ DEPS =r_aggr.h priority_q.h graph.h hashTable.h index_lib.h linklist_lib.h pr_li
 
 # for all the require programme name
 #  invertedIndex
-all: pagerank searchPagerank
+all: pagerank searchPagerank scaledFootrule
 
 
 

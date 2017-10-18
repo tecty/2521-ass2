@@ -15,7 +15,7 @@ priority_q init_pq(int size){
     // initial the structure of priority_q
     priority_q new = malloc(sizeof(struct priority_q_t));
     // give the initil value
-    new ->size = 0;
+    new ->size = size;
     // initil the node tables;
     new ->list = malloc(size* size * sizeof(struct pq_node_t));
     // initial all the node in the table
@@ -32,7 +32,7 @@ priority_q init_pq(int size){
     // return initialised struct
     return new;
 }
-void join_pq(priority_q q, int index, int order, int dist){
+void join_pq(priority_q q, int index, int order, double dist){
     // set the correspond node to have that distance
     q->list[index* q->size + order]->dist += dist;
 }
@@ -71,7 +71,6 @@ void sort_pq(priority_q q){
         // arrange the links
         q->list[n]->next = q->list[n+1];
     }
-
     // free the memory used by the node list
     free(q->list);
     // give a flag to say this priority queue is sorted
@@ -112,7 +111,8 @@ int leave_pq(priority_q q){
         sort_pq(q);
     }
 #ifdef DEBUG
-    printf("Try to leave a node in queue\n");
+
+    printf("\nTry to leave a node in queue\n");
 
 #endif
 
