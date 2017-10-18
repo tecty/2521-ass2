@@ -30,13 +30,13 @@ void get_rank(FILE *fp){
     }
 
     // have a hashTable to reduce the duplicate page
-    hashTable t = init_table();
+    hash_table t = init_table();
 
     //tmp node for insert
     hash_node this_hash_node;
 
     for (int i = 0; i < order_count; i++) {
-        for (ll_node this_ll_node = order_list[i]; this_ll_node != NULL;
+        for (ll_node this_ll_node = order_list[i]->head; this_ll_node != NULL;
             this_ll_node = this_ll_node->next) {
             /* read all given order, get all the pagename */
             // try to insert this name
@@ -52,10 +52,10 @@ void get_rank(FILE *fp){
     }
 
     // record the file_count;
-    t->nItem;
+    file_count = t->nItem;
 
     // initial the priority_q with the size of pages
-    priority_q queue init_pq(t->nItem);
+    priority_q queue = init_pq(t->nItem);
 
     // tmp pointer for the page name
     char * this_page;
@@ -84,11 +84,17 @@ void get_rank(FILE *fp){
 
     // final list of order for return
     link l = init_link();
-    // search the pagename by leaved pageno
-    join_l(l, t->table[leave_pq(q)]->key);
+
+    int this_page_no;
+    while (( this_page_no = leave_pq(queue)) != -1) {
+        /* leave every element in the priority queue */
+        // search the pagename by leaved pageno
+        join_l(l, t->table[this_page_no]->key);
+    }
+
 
     // free the table has used
-    for (size_t i = 0; i < order_count; i++) {
+    for (int i = 0; i < order_count; i++) {
         /* free the link list */
         free (order_list[i]);
     }

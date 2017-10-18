@@ -11,14 +11,14 @@ int main(int argc, char const *argv[]) {
     // buffer to sotre the readed page name
     char buff[100];
 
-    for (size_t i = 1; i < argc; i++) {
+    for (int i = 1; i < argc; i++) {
         /* read sorted file, and sent it into rank */
         // the link list to store the sorter order
         link list = init_link();
 
 
         // try to open the file
-        FILE *fp = fopen(argv[i]);
+        FILE *fp = fopen(argv[i],"r");
 
         if (fp == NULL) {
             /* open the file failed */

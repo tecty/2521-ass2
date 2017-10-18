@@ -25,7 +25,7 @@ typedef struct priority_q_t {
     // a list of node, initial is 25 = 5*5, use as a 2D-array
     pq_node *list;
     // the head of the link list, after sorted
-    pq_node *head;
+    pq_node head;
 } *priority_q;
 
 priority_q init_pq(int size);

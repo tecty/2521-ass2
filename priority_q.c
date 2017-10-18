@@ -22,7 +22,7 @@ priority_q init_pq(int size){
     for (int x = 0; x < size; x++) {
         for (int y = 0; y < size; y++) {
             /* for all the node in the table, initial it */
-            new->list[x][y] = init_pq_node(x,y);
+            new->list[x*size + y] = init_pq_node(x,y);
         }
     }
     new->head = NULL;
@@ -30,17 +30,17 @@ priority_q init_pq(int size){
     new->total = 0;
 
     // return initialised struct
-    retrun new;
+    return new;
 }
 void join_pq(priority_q q, int index, int order, int dist){
     // set the correspond node to have that distance
-    q->list[index][order]->dist += dist;
+    q->list[index* q->size + order]->dist += dist;
 }
 
 int pq_cmp(const void *a, const void *b){
     // compare the value by the distance
-    pq_node * n1 = pq_node *a;
-    pq_node * n2 = pq_node *b;
+    pq_node * n1 = (pq_node *)a;
+    pq_node * n2 = (pq_node *)b;
     // calculate the diff between the value hold in both nodes
     double diff = (*n1) ->dist - (*n2) -> dist;
     // base the difference, return the compare result
@@ -65,7 +65,7 @@ void sort_pq(priority_q q){
 
     // base the sorted list, generate the link list
     // set the head
-    q->head = q->list[0][0];
+    q->head = q->list[0];
     // set the remain node;
     for (int n = 0; n < q->size * q->size -1; n++) {
         // arrange the links
@@ -85,7 +85,7 @@ pq_node do_leave_pq(pq_node this, int index , int order){
         return NULL;
     }
     // else: the list is not ended
-    if (this->index == index || this=order == order) {
+    if (this->index == index || this->order == order) {
         /* this node should be remove */
         // record the next node to assemble the return node
         pq_node next_node = this->next;
@@ -119,7 +119,7 @@ int leave_pq(priority_q q){
     q->total += q->head->dist;
 
     // set up the new head by removing the nodes
-    this->head = do_leave_pq(q->head,q->head->index, q->head->order);
+    q->head = do_leave_pq(q->head,q->head->index, q->head->order);
 
     // return this index for this leave
     return return_index;
