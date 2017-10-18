@@ -4,6 +4,6 @@ char * strdup(const char *s){
     // just make the compailer happy
     int len = strlen(s);
     char *new = malloc(len*sizeof(char));
-    sprintf(new,"%s",s);
+    strncat(new,s,len);
     return new;
 }

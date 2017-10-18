@@ -70,14 +70,6 @@ void PageRank( double d, int index){
 }
 
 
-double abs_d(double in){
-    // get the absolute value of a double
-    if( in <0 ){
-        return -in;
-    }
-    return in;
-}
-
 double push_PR(){
     // update the pagerank
     double diff = 0;

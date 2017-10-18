@@ -23,6 +23,13 @@ void insert_edge(graph g, int src, int dest) {
 
 }
 
+double abs_d (double d ){
+    // return the absolute val
+    if (d <0 ) {
+        return -d;
+    }
+    return d;
+}
 
 graph initGraph(int nV){
     // base on the nv initialised the graph

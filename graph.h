@@ -34,4 +34,6 @@ void showGraph(graph g);
 // swap the vertex and its content
 void swap_vertex (graph g, int src, int dest);
 
+// a math function would be used in many cases
+
 #endif
