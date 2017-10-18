@@ -35,5 +35,5 @@ void showGraph(graph g);
 void swap_vertex (graph g, int src, int dest);
 
 // a math function would be used in many cases
-
+double abs_d (double d );
 #endif
