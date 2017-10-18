@@ -74,7 +74,7 @@ int pq_cmp(const void *a, const void *b){
     pq_node * n1 = (pq_node *)a;
     pq_node * n2 = (pq_node *)b;
     // calculate the diff between the value hold in both nodes
-    double diff = (*n1) ->dist - (*n2) -> dist;
+    double diff = (*n1) ->order - (*n2) -> order;
     // base the difference, return the compare result
 
     if (diff>0) {
