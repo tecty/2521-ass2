@@ -27,7 +27,7 @@ void push_l(link l, char *val){
         // set up the link in the head
         l->head ->prev = new;
     }
-
+    l->total++;
     l->head = new;
 
 }
@@ -44,6 +44,7 @@ void join_l(link l, char *val){
         new->prev = l->tail;
         l->tail = new;
     }
+    l->total++;
 
 }
 char *pop_l(link l){
@@ -68,7 +69,7 @@ char *pop_l(link l){
 
     // free the node
     free(this);
-
+    l->total--;
     return return_val;
 }
 
@@ -93,7 +94,7 @@ char *leave_l(link l){
     }
     // free the node
     free(this);
-
+    l->total--;
     return return_val;
 }
 
@@ -109,6 +110,7 @@ link init_link(){
     link new = malloc(sizeof(struct link_t));
     // initial the struct
     new->head = new->tail = NULL;
+    new->total = 0;
     // return the struct just create
     return new;
 }
@@ -179,4 +181,9 @@ void print_l(link l) {
         /* for every node in the linklist */
         printf("%s\n", this_node->val);
     }
+}
+
+int count_l(link l){
+
+    return l->total;
 }
