@@ -25,6 +25,7 @@ void join_l(link l, char *val);
 char *pop_l(link l);
 char *leave_l(link l);
 void show_l(link l);
+void print_l(link l, FILE *fp);
 link init_link();
 void filter_l(link keep, link filter);
 int count_l(link l);

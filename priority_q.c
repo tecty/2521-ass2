@@ -90,6 +90,10 @@ pq_node do_leave_pq(pq_node this, int index , int order){
         // record the next node to assemble the return node
         pq_node next_node = this->next;
 
+#ifdef DEBUG
+        printf("Leave node index = %d, order = %d\n",index, order );
+
+#endif
         // free this node's memory
         free(this);
         // calculate the return value
@@ -107,6 +111,11 @@ int leave_pq(priority_q q){
         // sort the list
         sort_pq(q);
     }
+#ifdef DEBUG
+    printf("Try to leave a node in queue\n");
+
+#endif
+
     // special situation, all the node has leaved the queue
     if (q->head == NULL) {
         /* code */

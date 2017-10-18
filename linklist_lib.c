@@ -173,13 +173,13 @@ void filter_l(link keep, link filter){
     keep->tail = this_node;
 
 }
-void print_l(link l) {
+void print_l(link l, FILE *fp) {
     /* just for this file */
     // print the content in the list by new line
     for (ll_node this_node = l->head; this_node != NULL;
         this_node = this_node->next) {
         /* for every node in the linklist */
-        printf("%s\n", this_node->val);
+        fprintf(fp,"%s\n", this_node->val);
     }
 }
 

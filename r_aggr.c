@@ -22,7 +22,7 @@ double cal_dist(int order ,int expect_order, int list_len){
             - (expect_order+1)/(double)file_count );
 }
 
-void get_rank(FILE *fp){
+void show_rank(FILE *fp){
     // print the final rank by a list
     if (fp == NULL) {
         /* print the result in the command line */
@@ -41,7 +41,7 @@ void get_rank(FILE *fp){
             /* read all given order, get all the pagename */
             // try to insert this name
             this_hash_node = find_node(t, this_ll_node->val);
-            if (this_hash_node != NULL) {
+            if (this_hash_node == NULL) {
                 /* insert this pagename */
                 this_hash_node = insert_node(t, this_ll_node->val);
 
@@ -92,6 +92,8 @@ void get_rank(FILE *fp){
         join_l(l, t->table[this_page_no]->key);
     }
 
+    fprintf(fp, "%lf\n", queue->total);
+    print_l(l,fp);
 
     // free the table has used
     for (int i = 0; i < order_count; i++) {
