@@ -1,4 +1,5 @@
 #include "dictionary.h"
+#include <math.h>
 
 hash_table tfidf_result;
 summary final;

@@ -1,13 +1,13 @@
 CC = gcc
-CFLAGS = -std=c11 -Wall -Werror -g -Wextra -DDEBUG
+CFLAGS = -std=c11 -lm -Wall -Werror -g -Wextra -DDEBUG
 # just need to put all the depended .h files,
 # it would look for the file.c with same name
-DEPS =r_aggr.h priority_q.h graph.h hashTable.h index_lib.h linklist_lib.h pr_lib.h readData.h
+DEPS =r_aggr.h priority_q.h graph.h hashTable.h index_lib.h linklist_lib.h pr_lib.h readData.h dictionary.h
 
 
 # for all the require programme name
 #  index_libIndex
-all: pagerank searchPagerank scaledFootrule inverted
+all: pagerank searchPagerank searchTfIdf scaledFootrule inverted
 
 
 
@@ -26,6 +26,8 @@ testHashTable: test_hasht.c hashTable.o
 testLL: test_linklist.c linklist_lib.o
 	$(CC) -o $@ $^ $(CFLAGS)
 searchPagerank:searchPagerank.c graph.o hashTable.o pr_lib.o index_lib.o linklist_lib.o
+	$(CC) -o $@ $^ $(CFLAGS)
+searchTfIdf:searchTfIdf.c graph.o hashTable.o pr_lib.o index_lib.o linklist_lib.o dictionary.o readData.o
 	$(CC) -o $@ $^ $(CFLAGS)
 scaledFootrule:scaledFootrule.c graph.o hashTable.o index_lib.o linklist_lib.o r_aggr.o priority_q.o  pr_lib.o
 	$(CC) -o $@ $^ $(CFLAGS)
