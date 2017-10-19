@@ -1,5 +1,5 @@
 #include "pr_lib.h"
-#include "index_lib.h"
+#include "inverted.h"
 
 int main(int argc, char const *argv[]) {
 

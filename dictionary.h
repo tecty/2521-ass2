@@ -1,4 +1,4 @@
-#include "index_lib.h"
+#include "inverted.h"
 #include <math.h>
 
 //prepared for mergesort

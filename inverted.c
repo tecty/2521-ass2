@@ -1,4 +1,4 @@
-#include "index_lib.h"
+#include "inverted.h"
 // local var to record the invertedIndex
 hash_table I_index;
 

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "strdup.h"
 
 typedef struct pq_node_t {
     int index;
@@ -34,4 +35,5 @@ void sort_pq(priority_q q);
 int leave_pq(priority_q q, int *result);
 void distnameArray_init(int size);
 void distnameArray_free();
+void show_pq(priority_q);
 #endif

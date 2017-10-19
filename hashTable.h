@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <string.h>
 #include <ctype.h>
+#include "strdup.h"
 #include "linklist_lib.h"
 
 union val_u{
@@ -13,6 +14,8 @@ union val_u{
     int i;
     // in the linklist lib, the type
     link l;
+    // a double array
+    double *result;
 
 };
 

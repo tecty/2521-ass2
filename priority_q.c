@@ -139,6 +139,11 @@ pq_node do_leave_pq(pq_node this, int index , int order){
 int leave_pq(priority_q q, int *result){
     if (q->list != NULL) {
         /* the queue is not leaved */
+#ifdef DEBUG
+        printf("\nBefore sortted, the list is like:\n" );
+        show_pq(q);
+        printf("SORT!\n");
+#endif
         // sort the list
         sort_pq(q);
     }
@@ -146,14 +151,7 @@ int leave_pq(priority_q q, int *result){
 
     printf("\nTry to leave a node in queue\n");
     //test if sorted
-    int smallCount = 0;
-    printf("SORT!\n");
-    for(pq_node p = q->head; p!=NULL; p = p->next){
-        printf("%lf->", p->dist);
-        if((smallCount+1)%5==0) putchar('\n');
-        smallCount++;
-    }
-
+    show_pq(q);
 
 #endif
     // special situation, all the node has leaved the queue
@@ -173,4 +171,36 @@ int leave_pq(priority_q q, int *result){
 
     // return this index for this leave
     return order;
+}
+
+
+void show_pq(priority_q q) {
+    /* base on the stage, show the pq */
+    if (q->list != NULL) {
+        /* here is stage 1 */
+        for (int i = 0; i < q->size; i++) {
+            printf("%d:\t",i );
+            for (int j = 0; j < q->size; j++) {
+                /* show all the node in the table */
+                printf("%lf\t",q->list[i*q->size +j]->dist );
+            }
+            printf("\n");
+        }
+    }
+    else {
+        /* stage 2  */
+        if (q->head == NULL) {
+            /* code */
+            printf("Current, the priority_q is empty\n\n" );
+            return;
+        }
+        int smallCount = 0;
+        for(pq_node p = q->head; p!=NULL; p = p->next){
+            printf("%lf->", p->dist);
+            if((smallCount+1)%q->size==0) putchar('\n');
+            smallCount++;
+        }
+        printf("\n");
+
+    }
 }
