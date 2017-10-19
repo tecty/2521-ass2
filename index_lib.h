@@ -1,6 +1,7 @@
 #ifndef INDEX_LIB_H
 #define INDEX_LIB_H
 
+#include "readData.h"
 #include "pr_lib.h"
 #include "linklist_lib.h"
 #include "stdlib.h"

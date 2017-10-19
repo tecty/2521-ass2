@@ -1,5 +1,5 @@
 // the searching engine for invertedIndex
-#include "inverted.h"
+#include "index_lib.h"
 
 
 
