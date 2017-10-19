@@ -2,7 +2,6 @@
 #include "index_lib.h"
 
 
-
 int main(int argc, char const *argv[]) {
     /* read the file and try to search something */
     if (argc<= 1) {
