@@ -1,5 +1,21 @@
 #include "r_aggr.h"
-
+/**
+*  All of the code in this assignment is written by Toby Huang z5141448 and
+*  Maggie Zhu z5141541. There is not a line of code from tuts or labs in 2521.
+*
+*  Explaination "smart" Algroithm in Part3:
+*  This algroithm is base on the Hungarian algorithm with some improvement.
+*  First we generate the list of distance for each page to place in different
+*  rank. Then, use the priority queue to leave the smallest distance node in the
+*  queue, which contain its page_name, rank. After the queue is empty, generate
+*  a link list of url, which have the final order of page_names. Then we print
+*  all the pagename in the link list and the total distance while leaveing the
+*  priority queue.
+*
+*  To have a better understanding, you can compile with -DDEBUG
+*  
+*
+**/
 int main(int argc, char const *argv[]) {
     /* main for scaledFootrule */
     if (argc <= 1) {
