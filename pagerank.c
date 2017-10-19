@@ -29,13 +29,6 @@ int main(int argc, char const *argv[]) {
     show_pagerank(fp);
     fclose(fp);
 
-    // // get the invertedIndex
-    // set_index(g);
-    //
-    // // print the index into the file
-    // fp = fopen("invertedIndex.txt","w");
-    // show_index(fp);
-    // fclose(fp);
 
     return 0;
 }

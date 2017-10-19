@@ -9,7 +9,10 @@ int main() {
     // set the index by the graph
     set_index(g);
     // print the index into file
-    show_index(NULL);
+    FILE *fp = fopen("invertedIndex.txt","w");
+    show_index(fp);
+    // close the opened file
+    fclose(fp);
 
     return 0;
 }

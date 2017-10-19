@@ -43,6 +43,8 @@ void generalise_table(hash_table t);
 // sort the table by the val.i
 void sort_table_by_int(hash_table t);
 
+// sort the table by the val.ds
+void sort_table_by_double(hash_table t);
 
 // show all the key in table
 void show_table(hash_table t);

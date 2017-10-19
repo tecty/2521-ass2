@@ -14,4 +14,6 @@ void show_pagerank(FILE *fp);
 void show_weight();
 void sort_by_pr();
 
+
+hash_table read_pagerank(FILE *fp);
 #endif

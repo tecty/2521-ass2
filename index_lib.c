@@ -110,8 +110,8 @@ hash_table read_index(){
                 indent ++;
             }
             else{
-                // urls, push to stack
-                push_l(this_node->val.l, word);
+                // urls, join the link
+                join_l(this_node->val.l, word);
             }
             // record the indent
             indent += strlen(word)+1;
@@ -173,5 +173,30 @@ void search_index(char *key){
 
 link get_result(){
     // return the final result of the list
-    return search_list;
+    // read the sorted pagerank
+    hash_table pr = read_pagerank(NULL);
+
+    // reconstruct the search_list
+    link result= init_link();
+
+#ifdef DEBUG
+    printf("\nThe pagerank read from file is\n" );
+    show_table(pr);
+    printf("\n");
+#endif
+
+    // rearrange the sult by the pagerank order
+    for (int i = 0; i < pr->nItem; i++) {
+        /* all the node in the hashTable, try to search it in the list*/
+        for (ll_node node = search_list->head; node != NULL; node = node->next) {
+            /* search for all the node in the list, find the this page name */
+            if (strcmp(pr->table[i]->key, node->val)== 0) {
+                /* found the key for this position */
+                join_l(result,node->val);
+            }
+        }
+    }
+
+
+    return result;
 }

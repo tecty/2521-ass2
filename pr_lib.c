@@ -172,3 +172,43 @@ void show_pagerank(FILE *fp) {
         fprintf(fp,"%s, %d, %.7f\n",this_graph->str_l[this],this_graph->outlink[this],PR[this] );
     }
 }
+
+hash_table read_pagerank(FILE *fp){
+    if (fp == NULL) {
+        /* go to the default place to find the pagerank list */
+        fp = fopen("pagerankList.txt","r");
+        // check whether the file is successful opened
+        assert(fp!= NULL);
+    }
+    // not care about this value
+    int dump;
+    // temporary record the page's rank
+    double pagerank;
+    // temporary record the page_name
+    char page_name[100];
+
+    // temporary store the file
+    char buff[1000];
+
+    // store the page_name and table
+    hash_table t = init_table();
+
+    while (!feof(fp) &&
+        fgets(buff,1000,fp)) {
+        int len =  strlen(buff);
+        for (int i = 0; i < len; i++) {
+            /* replace all the , to " " */
+            if (buff[i] == ',') {
+                buff[i] = ' ';
+            }
+        }
+        /* write it into hashTable */
+        sscanf(buff,"%s %d %lf", page_name, &dump, &pagerank);
+        insert_node(t, page_name) ->val.d = pagerank;
+    }
+
+    // sort the table by the inserted pagerank
+    sort_table_by_double(t);
+
+    return t;
+}
